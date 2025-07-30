@@ -14,6 +14,5 @@ public class HomeController {
 
     @PostMapping("/hello")
     public ResponseEntity<?> hello(@RequestBody Map<String, String> body) {
-        return ResponseEntity.status(HttpStatus.OK).body(Map.of("message", body.get("name")));
-    }
+        return ResponseEntity.status(HttpStatus.OK).body(Map.of("message", "Hello, " + body.get("name")));    }
 }
