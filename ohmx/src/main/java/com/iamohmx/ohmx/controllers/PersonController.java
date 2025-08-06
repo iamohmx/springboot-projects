@@ -76,7 +76,7 @@ public class PersonController {
         if (people == null || people.isEmpty()) {
             Map<String, String> response = new HashMap<>();
             response.put("message", "ไม่พบข้อมูลที่มีชื่อ: " + name + " และอายุระหว่าง " + startAge + "-" + endAge);
-            return ResponseEntity.ok().body(response);
+            return ResponseEntity.status(404).body(response);
         } else {
             // Sort the filtered results in memory
             if ("name".equals(sortBy)) {
@@ -120,9 +120,7 @@ public class PersonController {
         if (people == null || people.isEmpty()) {
             Map<String, String> response = new HashMap<>();
             response.put("message", "ไม่พบข้อมูลในระบบ");
-            return ResponseEntity.ok().body(new HashMap<String, String>() {{
-                put("message", "ไม่พบข้อมูลในช่วงอายุที่ระบุ");
-            }});
+            return ResponseEntity.status(404).body(response);
         } else {
             return ResponseEntity.ok().body(people);
         }
