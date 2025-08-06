@@ -41,4 +41,17 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
     List<Person> findByNameContainingWithSort(@Param("name") String name,
                                              @Param("sortBy") String sortBy,
                                              @Param("sortDirection") String sortDirection);
+
+    // Alternative simpler approach for name search with sorting
+    @Query("SELECT p FROM Person p WHERE LOWER(p.name) LIKE LOWER(CONCAT('%', :name, '%'))")
+    List<Person> findByNameContainingIgnoreCaseOrderByIdAsc(@Param("name") String name);
+
+    @Query("SELECT p FROM Person p WHERE LOWER(p.name) LIKE LOWER(CONCAT('%', :name, '%')) ORDER BY p.id DESC")
+    List<Person> findByNameContainingIgnoreCaseOrderByIdDesc(@Param("name") String name);
+
+    @Query("SELECT p FROM Person p WHERE LOWER(p.name) LIKE LOWER(CONCAT('%', :name, '%')) ORDER BY p.name ASC")
+    List<Person> findByNameContainingIgnoreCaseOrderByNameAsc(@Param("name") String name);
+
+    @Query("SELECT p FROM Person p WHERE LOWER(p.name) LIKE LOWER(CONCAT('%', :name, '%')) ORDER BY p.name DESC")
+    List<Person> findByNameContainingIgnoreCaseOrderByNameDesc(@Param("name") String name);
 }

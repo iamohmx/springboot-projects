@@ -38,8 +38,20 @@ public class PersonController {
 
         List<Person> people;
 
-        // Use custom query with sorting
-        people = personRepository.findByNameContainingWithSort(name, sortBy, sortDirection);
+        // Use simpler, more reliable query methods
+        if ("name".equals(sortBy)) {
+            if ("desc".equals(sortDirection)) {
+                people = personRepository.findByNameContainingIgnoreCaseOrderByNameDesc(name);
+            } else {
+                people = personRepository.findByNameContainingIgnoreCaseOrderByNameAsc(name);
+            }
+        } else {
+            if ("desc".equals(sortDirection)) {
+                people = personRepository.findByNameContainingIgnoreCaseOrderByIdDesc(name);
+            } else {
+                people = personRepository.findByNameContainingIgnoreCaseOrderByIdAsc(name);
+            }
+        }
 
         if (people == null || people.isEmpty()) {
             Map<String, String> response = new HashMap<>();
